@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Credentials, User } from "./types";
+import { API_BASE } from "../environment";
 
-export const API_BASE = process.env.REACT_APP_API_BASE;
 const USERS_API = `${API_BASE}/users`;
 
 const request = axios.create({
@@ -9,7 +9,7 @@ const request = axios.create({
 });
 
 export async function signup(user: User): Promise<User> {
-  const response = await request.post(`${USERS_API}/signup`, removeId(user));
+  const response = await request.post(`${USERS_API}/signup`, user);
   return response.data;
 }
 
@@ -28,14 +28,6 @@ export async function signin(credentials: Credentials): Promise<User> {
 }
 
 export async function updateProfile(user: User): Promise<User> {
-  const response = await request.post(
-    `${USERS_API}/${user._id}`,
-    removeId(user)
-  );
+  const response = await request.post(`${USERS_API}/${user._id}`, user);
   return response.data;
-}
-
-function removeId(obj: { _id: string; [key: string]: any }) {
-  const { _id, ...rest } = obj;
-  return rest;
 }

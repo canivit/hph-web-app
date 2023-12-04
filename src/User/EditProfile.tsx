@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GlobalState } from "../Store/store";
 import { useEffect, useState } from "react";
-import { User } from "../types";
+import { User } from "./types";
 import { useNavigate } from "react-router";
-import * as client from "../client";
+import * as client from "./client";
 import { setCurrentUser } from "../Store/userReducer";
 import { TrainerContent } from "./TrainerContent";
 import { AthleteContent } from "./AthleteContent";

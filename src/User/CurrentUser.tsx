@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import * as client from "../client";
+import * as client from "./client";
 import { setCurrentUser } from "../Store/userReducer";
 import { useEffect, useState } from "react";
 

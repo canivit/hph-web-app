@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import * as client from "../client";
-import { User } from "../types";
+import * as client from "./client";
+import { User } from "./types";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import { setCurrentUser as setGlobalUser } from "../Store/userReducer";

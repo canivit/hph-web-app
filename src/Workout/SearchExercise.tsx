@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Exercise } from "./CreateWorkout";
 import { Accordion } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { Exercise } from "./types";
 
 export function SearchExercise({
   addExerciseHandler,

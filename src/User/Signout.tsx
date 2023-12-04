@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import * as client from "../client";
+import * as client from "./client";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../Store/userReducer";
 import { useEffect } from "react";

@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Credentials } from "../types";
-import * as client from "../client";
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalState } from "../Store/store";
+import { Credentials } from "./types";
+import * as client from "./client";
+import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../Store/userReducer";
 
 export function Signin() {
-  const currentUser = useSelector(
-    (state: GlobalState) => state.userReducer.currentUser
-  );
   const dispatch = useDispatch();
   const [credentials, setCredentials] = useState<Credentials>({
     username: "",
@@ -26,15 +22,6 @@ export function Signin() {
       setCredentials({ username: "", password: "" });
       setAttempt("InvalidAttempt");
     }
-  }
-
-  if (currentUser !== false) {
-    return (
-      <div className="alert alert-warning">
-        You are already signed in. To sign in as a different user, please sign
-        out first.
-      </div>
-    );
   }
 
   return (

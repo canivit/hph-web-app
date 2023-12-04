@@ -56,7 +56,7 @@ export function CreateWorkout() {
   }
 
   return (
-    <>
+    <div>
       <h2>Create Workout</h2>
       <div className="row">
         <div className="col-7">
@@ -74,7 +74,7 @@ export function CreateWorkout() {
           <SearchExercise addExerciseHandler={onAddExercise} />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -7,6 +7,8 @@ import { Signout } from "./User/Signout";
 import { CurrentUser } from "./User/CurrentUser";
 import { Signin } from "./User/Signin";
 import { CreateWorkout } from "./Workout/CreateWorkout";
+import { Profile } from "./User/Profile";
+import { EditProfile } from "./User/EditProfile";
 
 export function App() {
   return (
@@ -20,6 +22,8 @@ export function App() {
               <Route path="/Signin" element={<Signin />} />
               <Route path="/Signup" element={<Signup />} />
               <Route path="/Signout" element={<Signout />} />
+              <Route path="/Profile" element={<Profile />} />
+              <Route path="/EditProfile" element={<EditProfile />} />
             </Routes>
           </div>
         </CurrentUser>

@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser as setGlobalUser } from "../Store/userReducer";
 export function Signup() {
   const [user, setUser] = useState<User>({
+    _id: "",
     username: "",
     password: "",
     firstName: "",
@@ -29,6 +30,7 @@ export function Signup() {
       if (e instanceof AxiosError) {
         setError(e.response?.data ?? "Unknown error occurred");
       }
+      setError("Unknown error occurred");
     }
   }
 
@@ -129,6 +131,7 @@ export function Signup() {
           Role
         </label>
         <select
+          id="roleInput"
           value={user.role}
           className="form-select"
           onChange={(e) => {

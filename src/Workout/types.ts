@@ -1,11 +1,13 @@
+import { User } from "../User/types";
+
 export type Workout = {
   _id: string;
   title: string;
   description: string;
   level: Level;
-  post_date: Date;
+  post_date: string;
   steps: WorkoutStep[];
-  trainer_id: string;
+  trainer?: User;
 };
 
 export type WorkoutStep = {

@@ -25,15 +25,14 @@ export function CreateWorkout() {
     title: "",
     description: "",
     level: "Beginner",
-    post_date: new Date(),
+    post_date: "",
     steps: [],
-    trainer_id: currentUser._id,
   };
 
-  async function onSaveHandler(w: Workout) {
-    await client.createWorkout(w);
+  const onSaveHandler = async (w: Workout) => {
+    await client.createWorkout(currentUser._id, w);
     navigate("/Workouts");
-  }
+  };
 
   function onCancelHandler() {
     navigate("/Workouts");

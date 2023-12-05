@@ -47,7 +47,7 @@ export function EditWorkout() {
   if (
     currentUser === false ||
     currentUser.role !== "Trainer" ||
-    workout.trainer_id !== currentUser._id
+    workout.trainer!._id !== currentUser._id
   ) {
     return (
       <div className="alert alert-danger" role="alert">

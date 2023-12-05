@@ -2,7 +2,7 @@ import axios from "axios";
 import { Credentials, User } from "./types";
 import { API_BASE } from "../environment";
 
-const USERS_API = `${API_BASE}/users`;
+export const USERS_API = `${API_BASE}/users`;
 
 const request = axios.create({
   withCredentials: true,

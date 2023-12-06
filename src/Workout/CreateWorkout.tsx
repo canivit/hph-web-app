@@ -29,10 +29,10 @@ export function CreateWorkout() {
     steps: [],
   };
 
-  const onSaveHandler = async (w: Workout) => {
-    await client.createWorkout(currentUser._id, w);
+  async function onSaveHandler(w: Workout) {
+    await client.createWorkout(w);
     navigate("/Workouts");
-  };
+  }
 
   function onCancelHandler() {
     navigate("/Workouts");

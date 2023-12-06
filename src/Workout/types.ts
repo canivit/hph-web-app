@@ -25,4 +25,13 @@ export type Exercise = {
   gifUrl: string;
 };
 
+export type Rating = {
+  _id: string;
+  value: number;
+  comment: string;
+  date: Date;
+  athlete?: User;
+  workout?: Workout;
+};
+
 export type Level = "Beginner" | "Intermediate" | "Advanced";

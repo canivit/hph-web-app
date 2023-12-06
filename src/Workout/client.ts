@@ -1,22 +1,16 @@
 import axios from "axios";
 import { API_BASE } from "../environment";
-import { Exercise, Workout } from "./types";
-import { USERS_API } from "../User/client";
+import { Exercise, Rating, Workout } from "./types";
 
 const WORKOUTS_API = `${API_BASE}/workouts`;
+const RATINGS_API = `${API_BASE}/ratings`;
 
 const request = axios.create({
   withCredentials: true,
 });
 
-export async function createWorkout(
-  trainerId: string,
-  workout: Workout
-): Promise<Workout> {
-  const response = await request.put(
-    `${USERS_API}/${trainerId}/workouts`,
-    workout
-  );
+export async function createWorkout(workout: Workout): Promise<Workout> {
+  const response = await request.put(WORKOUTS_API, workout);
   return response.data;
 }
 
@@ -40,6 +34,11 @@ export async function findAllWorkouts(): Promise<Workout[]> {
 
 export async function deleteWorkout(workoutId: string): Promise<void> {
   await request.delete(`${WORKOUTS_API}/${workoutId}`);
+}
+
+export async function createRating(rating: Rating, workoutId: string) {
+  const response = await request.put(`${RATINGS_API}/${workoutId}`, rating);
+  return response.data;
 }
 
 const exerciseRequest = axios.create({

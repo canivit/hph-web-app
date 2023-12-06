@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Workout, WorkoutStep } from "./types";
+import { Rating, Workout, WorkoutStep } from "./types";
 import { useNavigate, useParams } from "react-router";
 import * as client from "./client";
 import { LevelBadge } from "./LevelBadge";
@@ -7,14 +7,21 @@ import { formatDate } from "../util";
 import { updateGifUrlsOfWorkout } from "./util";
 import { Accordion } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPencil,
+  faStarHalfStroke,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import { SpecificUserContent } from "../User/SpecificUserContent";
 import { Link } from "react-router-dom";
+import { AthleteContent } from "../User/AthleteContent";
+import { RateWorkoutModal } from "./RateWorkoutModal";
 
 export function DetailedWorkout() {
   const [workout, setWorkout] = useState<Workout | "Loading" | "NotFound">(
     "Loading"
   );
+  const [rateModalVisibility, setRateModalVisibility] = useState(false);
   const params = useParams();
   const workoutId = params.workoutId ? params.workoutId : "";
   const navigate = useNavigate();
@@ -34,6 +41,20 @@ export function DetailedWorkout() {
     navigate("/Workouts");
   }
 
+  async function createRating(rating: Rating) {
+    const response = await client.createRating(rating, workoutId);
+    console.log(response);
+    onCloseModal();
+  }
+
+  function onCloseModal() {
+    setRateModalVisibility(false);
+  }
+
+  function onShowModal() {
+    setRateModalVisibility(true);
+  }
+
   useEffect(() => {
     fetchWorkout();
   }, [workoutId]);
@@ -51,31 +72,41 @@ export function DetailedWorkout() {
   }
 
   return (
-    <div className="w-100 row">
-      <div className="col-6">
-        <WorkoutDetails
-          workout={workout}
-          deleteWorkoutHandler={deleteWorkout}
-        />
+    <>
+      <RateWorkoutModal
+        show={rateModalVisibility}
+        closeHandler={onCloseModal}
+        saveHandler={createRating}
+      />
+      <div className="w-100 row">
+        <div className="col-6">
+          <WorkoutDetails
+            workout={workout}
+            deleteWorkoutHandler={deleteWorkout}
+            rateModalHandler={onShowModal}
+          />
+        </div>
+        <div className="col-6"></div>
       </div>
-      <div className="col-6"></div>
-    </div>
+    </>
   );
 }
 
 function WorkoutDetails({
   workout,
   deleteWorkoutHandler,
+  rateModalHandler,
 }: {
   workout: Workout;
   deleteWorkoutHandler: () => void;
+  rateModalHandler: () => void;
 }) {
   return (
     <>
       <div className="d-flex justify-content-between">
         <h2 className="mb-4">{workout.title}</h2>
-        <SpecificUserContent userId={workout.trainer!._id}>
-          <div>
+        <div>
+          <SpecificUserContent userId={workout.trainer!._id}>
             <Link
               to={`/EditWorkout/${workout._id}`}
               className="btn btn-warning me-2"
@@ -83,12 +114,21 @@ function WorkoutDetails({
               <FontAwesomeIcon icon={faPencil} className="me-2" />
               Edit
             </Link>
-            <button className="btn btn-danger" onClick={deleteWorkoutHandler}>
+            <button
+              className="btn btn-danger me-2"
+              onClick={deleteWorkoutHandler}
+            >
               <FontAwesomeIcon icon={faTrashCan} className="me-2" />
               Remove
             </button>
-          </div>
-        </SpecificUserContent>
+          </SpecificUserContent>
+          <AthleteContent>
+            <button className="btn btn-success" onClick={rateModalHandler}>
+              <FontAwesomeIcon icon={faStarHalfStroke} className="me-2" />
+              Rate this workout
+            </button>
+          </AthleteContent>
+        </div>
       </div>
       <h5 className="mb-4">
         Level: <LevelBadge level={workout.level} />

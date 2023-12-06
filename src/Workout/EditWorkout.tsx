@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import { WorkoutEditor } from "./WorkoutEditor";
 import * as client from "./client";
 import { useEffect, useState } from "react";
+import { updateGifUrlsOfWorkout } from "./util";
 
 export function EditWorkout() {
   const currentUser = useSelector(
@@ -21,7 +22,8 @@ export function EditWorkout() {
 
   async function fetchWorkout() {
     try {
-      const workout = await client.findWorkoutById(workoutId);
+      let workout = await client.findWorkoutById(workoutId);
+      workout = await updateGifUrlsOfWorkout(workout);
       setWorkout(workout);
     } catch {
       setWorkout("NotFound");

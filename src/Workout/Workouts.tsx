@@ -7,6 +7,8 @@ import { TrainerContent } from "../User/TrainerContent";
 import { AthleteContent } from "../User/AthleteContent";
 import { useSelector } from "react-redux";
 import { GlobalState } from "../Store/store";
+import { LevelBadge } from "./LevelBadge";
+import { formatDate } from "../util";
 
 export function Workouts() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
@@ -186,29 +188,6 @@ function WorkoutCard({ workout }: { workout: Workout }) {
       </ul>
     </div>
   );
-}
-
-function LevelBadge({ level }: { level: Level }) {
-  switch (level) {
-    case "Beginner":
-      return <span className="badge bg-success text-bg-light">Beginner</span>;
-    case "Intermediate":
-      return (
-        <span className="badge bg-warning text-bg-light">Intermediate</span>
-      );
-    case "Advanced":
-      return <span className="badge bg-danger text-bg-light">Advanced</span>;
-  }
-}
-
-function formatDate(date: Date): string {
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, "0");
-  const day = date.getDate().toString().padStart(2, "0");
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
-
-  return `${month}/${day}/${year} ${hours}:${minutes}`;
 }
 
 function createWorkoutPredicate(

@@ -18,6 +18,7 @@ export type WorkoutStep = {
 };
 
 export type Exercise = {
+  id: string;
   name: string;
   targetMuscle: string;
   equipment: string;

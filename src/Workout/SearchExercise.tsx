@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Accordion } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Exercise } from "./types";
+import { searchExercise } from "./client";
 
 export function SearchExercise({
   addExerciseHandler,
@@ -120,31 +120,3 @@ function ExerciseItem({
   );
 }
 
-const request = axios.create({
-  params: {
-    limit: 100,
-  },
-  headers: {
-    "X-RapidAPI-Key": process.env.REACT_APP_EXERCISE_API_KEY!,
-    "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-  },
-});
-
-const acceptedEquipment = ["barbell", "dumbbell", "body weight"];
-
-async function searchExercise(name: string): Promise<Exercise[]> {
-  const param = encodeURIComponent(name);
-  const response = await request.get(
-    `https://exercisedb.p.rapidapi.com/exercises/name/${param}`
-  );
-  return response.data
-    .map((x: any): Exercise => {
-      return {
-        name: x.name,
-        targetMuscle: x.target,
-        equipment: x.equipment,
-        gifUrl: x.gifUrl,
-      };
-    })
-    .filter((e: Exercise) => acceptedEquipment.includes(e.equipment));
-}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_BASE } from "../environment";
-import { Workout } from "./types";
+import { Exercise, Workout } from "./types";
 import { USERS_API } from "../User/client";
 
 const WORKOUTS_API = `${API_BASE}/workouts`;
@@ -36,4 +36,43 @@ export async function updateWorkout(workout: Workout): Promise<Workout> {
 export async function findAllWorkouts(): Promise<Workout[]> {
   const response = await request.get(WORKOUTS_API);
   return response.data;
+}
+
+const exerciseRequest = axios.create({
+  params: {
+    limit: 100,
+  },
+  headers: {
+    "X-RapidAPI-Key": process.env.REACT_APP_EXERCISE_API_KEY!,
+    "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+  },
+});
+
+const acceptedEquipment = ["barbell", "dumbbell", "body weight"];
+
+export async function searchExercise(name: string): Promise<Exercise[]> {
+  const param = encodeURIComponent(name);
+  const response = await exerciseRequest.get(
+    `https://exercisedb.p.rapidapi.com/exercises/name/${param}`
+  );
+  return response.data
+    .map(responseDataToExercise)
+    .filter((e: Exercise) => acceptedEquipment.includes(e.equipment));
+}
+
+export async function findExerciseById(exerciseId: string): Promise<Exercise> {
+  const response = await exerciseRequest.get(
+    `https://exercisedb.p.rapidapi.com/exercises/exercise/${exerciseId}`
+  );
+  return responseDataToExercise(response.data);
+}
+
+function responseDataToExercise(data: any): Exercise {
+  return {
+    id: data.id,
+    name: data.name,
+    targetMuscle: data.target,
+    equipment: data.equipment,
+    gifUrl: data.gifUrl,
+  };
 }

@@ -12,6 +12,7 @@ import { EditProfile } from "./User/EditProfile";
 import { EditWorkout } from "./Workout/EditWorkout";
 import { Home } from "./Home";
 import { Workouts } from "./Workout/Workouts";
+import { DetailedWorkout } from "./Workout/DetailedWorkout";
 
 export function App() {
   return (
@@ -30,6 +31,10 @@ export function App() {
               <Route path="/CreateWorkout" element={<CreateWorkout />} />
               <Route path="/EditWorkout/:workoutId" element={<EditWorkout />} />
               <Route path="/Workouts" element={<Workouts />} />
+              <Route
+                path="/Workouts/:workoutId"
+                element={<DetailedWorkout />}
+              />
             </Routes>
           </div>
         </CurrentUser>

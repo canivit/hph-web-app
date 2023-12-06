@@ -1,5 +1,5 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { SignedInContent } from "./User/UserContent";
+import { UserContent } from "./User/UserContent";
 import { Link } from "react-router-dom";
 
 export function NavBar() {
@@ -28,16 +28,16 @@ export function NavBar() {
             <Nav.Link as={Link} to="/Signup">
               Sign up
             </Nav.Link>
-            <SignedInContent>
+            <UserContent>
               <Nav.Link as={Link} to="/Profile">
                 Profile
               </Nav.Link>
-            </SignedInContent>
-            <SignedInContent>
+            </UserContent>
+            <UserContent>
               <Nav.Link as={Link} to="/Signout">
                 Sign out
               </Nav.Link>
-            </SignedInContent>
+            </UserContent>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -38,6 +38,10 @@ export async function findAllWorkouts(): Promise<Workout[]> {
   return response.data;
 }
 
+export async function deleteWorkout(workoutId: string): Promise<void> {
+  await request.delete(`${WORKOUTS_API}/${workoutId}`);
+}
+
 const exerciseRequest = axios.create({
   params: {
     limit: 100,

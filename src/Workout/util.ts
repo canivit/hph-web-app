@@ -1,13 +1,18 @@
 import { Workout, WorkoutStep, Exercise } from "./types";
 import * as client from "./client";
 
+const updateGifUrls = process.env.REACT_APP_UPDATE_GIF_URLS === "TRUE";
+
 export async function updateGifUrlsOfWorkout(
   workout: Workout
 ): Promise<Workout> {
-  return {
-    ...workout,
-    steps: await updateGifUrlsOfSteps(workout.steps),
-  };
+  if (updateGifUrls) {
+    return {
+      ...workout,
+      steps: await updateGifUrlsOfSteps(workout.steps),
+    };
+  }
+  return workout;
 }
 
 async function updateGifUrlsOfSteps(

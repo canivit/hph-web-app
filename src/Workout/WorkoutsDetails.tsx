@@ -14,6 +14,7 @@ import { RateWorkoutModal } from "./RateWorkoutModal";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { GlobalState } from "../Store/store";
+import { SimpleLink } from "../SimpleLink";
 
 export function WorkoutDetails({
   workout,
@@ -86,7 +87,11 @@ export function WorkoutDetails({
         </h5>
         <h5>
           Posted by:{" "}
-          <span className="badge bg-primary">@{workout.trainer!.username}</span>
+          <SimpleLink to={`/Profile/${workout.trainer!._id}`}>
+            <span className="badge bg-primary">
+              @{workout.trainer!.username}
+            </span>
+          </SimpleLink>
         </h5>
       </div>
       <h5>Description</h5>

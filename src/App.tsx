@@ -13,6 +13,7 @@ import { EditWorkout } from "./Workout/EditWorkout";
 import { Home } from "./Home";
 import { Workouts } from "./Workout/Workouts";
 import { DetailedWorkout } from "./Workout/DetailedWorkout";
+import { DetailedProfile } from "./User/DetailedProfile";
 
 export function App() {
   return (
@@ -27,6 +28,7 @@ export function App() {
               <Route path="/Signup" element={<Signup />} />
               <Route path="/Signout" element={<Signout />} />
               <Route path="/Profile" element={<Profile />} />
+              <Route path="/Profile/:userId" element={<DetailedProfile />} />
               <Route path="/EditProfile" element={<EditProfile />} />
               <Route path="/CreateWorkout" element={<CreateWorkout />} />
               <Route path="/EditWorkout/:workoutId" element={<EditWorkout />} />

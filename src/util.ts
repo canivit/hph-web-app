@@ -7,3 +7,12 @@ export function formatDate(date: Date): string {
 
   return `${month}/${day}/${year} ${hours}:${minutes}`;
 }
+
+export function ageInYears(dob: Date): number {
+  const now = new Date();
+  const years = now.getFullYear() - dob.getFullYear();
+  const months = now.getMonth() - dob.getMonth();
+  const days = now.getDate() - dob.getDate();
+
+  return months < 0 || (months === 0 && days < 0) ? years - 1 : years;
+}

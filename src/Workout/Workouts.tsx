@@ -163,7 +163,7 @@ function WorkoutCard({ workout }: { workout: Workout }) {
               <b>Posted by:</b>
             </div>
             <div>
-              <SimpleLink to={`/Users/${workout.trainer!._id}`}>
+              <SimpleLink to={`/Profile/${workout.trainer!._id}`}>
                 @{workout.trainer!.username}
               </SimpleLink>
             </div>

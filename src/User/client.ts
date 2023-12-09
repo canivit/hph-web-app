@@ -31,3 +31,8 @@ export async function updateProfile(user: User): Promise<User> {
   const response = await request.post(`${USERS_API}/${user._id}`, user);
   return response.data;
 }
+
+export async function findUserById(userId: string): Promise<User> {
+  const response = await request.get(`${USERS_API}/${userId}`);
+  return response.data;
+}

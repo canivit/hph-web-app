@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { GlobalState } from "../Store/store";
 
 export function Profile() {
@@ -10,5 +10,5 @@ export function Profile() {
     return <Navigate to="/Signin" />;
   }
 
-  return <Link to="/EditProfile" className="btn btn-primary">Edit Profile</Link>;
+  return <Navigate to={`/Profile/${currentUser._id}`} />;
 }

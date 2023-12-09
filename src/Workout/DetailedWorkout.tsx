@@ -1,27 +1,16 @@
 import { useEffect, useState } from "react";
-import { Rating, Workout, WorkoutStep } from "./types";
+import { Rating, Workout } from "./types";
 import { useNavigate, useParams } from "react-router";
 import * as client from "./client";
-import { LevelBadge } from "./LevelBadge";
-import { formatDate } from "../util";
+import { WorkoutDetails } from "./WorkoutsDetails";
 import { updateGifUrlsOfWorkout } from "./util";
-import { Accordion } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPencil,
-  faStarHalfStroke,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
-import { SpecificUserContent } from "../User/SpecificUserContent";
-import { Link } from "react-router-dom";
-import { AthleteContent } from "../User/AthleteContent";
-import { RateWorkoutModal } from "./RateWorkoutModal";
+import { WorkoutRatings } from "./WorkoutRatings";
 
 export function DetailedWorkout() {
   const [workout, setWorkout] = useState<Workout | "Loading" | "NotFound">(
     "Loading"
   );
-  const [rateModalVisibility, setRateModalVisibility] = useState(false);
+  const [ratings, setRatings] = useState<Rating[]>([]);
   const params = useParams();
   const workoutId = params.workoutId ? params.workoutId : "";
   const navigate = useNavigate();
@@ -36,27 +25,36 @@ export function DetailedWorkout() {
     }
   }
 
+  async function fetchRatings() {
+    const ratings = await client.findRatingsByWorkoutId(workoutId);
+    setRatings(ratings);
+  }
+
   async function deleteWorkout() {
     await client.deleteWorkout(workoutId);
     navigate("/Workouts");
   }
 
   async function createRating(rating: Rating) {
-    const response = await client.createRating(rating, workoutId);
-    console.log(response);
-    onCloseModal();
+    const createdRating = await client.createRating(rating, workoutId);
+    setRatings([...ratings, createdRating]);
   }
 
-  function onCloseModal() {
-    setRateModalVisibility(false);
+  async function updateRating(rating: Rating) {
+    const updatedRating = await client.updateRating(rating);
+    setRatings(
+      ratings.map((r) => (r._id === updatedRating._id ? updatedRating : r))
+    );
   }
 
-  function onShowModal() {
-    setRateModalVisibility(true);
+  async function deleteRating(ratingId: string) {
+    await client.deleteRating(ratingId);
+    setRatings(ratings.filter((r) => r._id !== ratingId));
   }
 
   useEffect(() => {
     fetchWorkout();
+    fetchRatings();
   }, [workoutId]);
 
   if (workout === "Loading") {
@@ -73,128 +71,23 @@ export function DetailedWorkout() {
 
   return (
     <>
-      <RateWorkoutModal
-        show={rateModalVisibility}
-        closeHandler={onCloseModal}
-        saveHandler={createRating}
-      />
       <div className="w-100 row">
-        <div className="col-6">
+        <div className="col-7">
           <WorkoutDetails
             workout={workout}
+            ratings={ratings}
             deleteWorkoutHandler={deleteWorkout}
-            rateModalHandler={onShowModal}
+            createRatingHandler={createRating}
           />
         </div>
-        <div className="col-6"></div>
-      </div>
-    </>
-  );
-}
-
-function WorkoutDetails({
-  workout,
-  deleteWorkoutHandler,
-  rateModalHandler,
-}: {
-  workout: Workout;
-  deleteWorkoutHandler: () => void;
-  rateModalHandler: () => void;
-}) {
-  return (
-    <>
-      <div className="d-flex justify-content-between">
-        <h2 className="mb-4">{workout.title}</h2>
-        <div>
-          <SpecificUserContent userId={workout.trainer!._id}>
-            <Link
-              to={`/EditWorkout/${workout._id}`}
-              className="btn btn-warning me-2"
-            >
-              <FontAwesomeIcon icon={faPencil} className="me-2" />
-              Edit
-            </Link>
-            <button
-              className="btn btn-danger me-2"
-              onClick={deleteWorkoutHandler}
-            >
-              <FontAwesomeIcon icon={faTrashCan} className="me-2" />
-              Remove
-            </button>
-          </SpecificUserContent>
-          <AthleteContent>
-            <button className="btn btn-success" onClick={rateModalHandler}>
-              <FontAwesomeIcon icon={faStarHalfStroke} className="me-2" />
-              Rate this workout
-            </button>
-          </AthleteContent>
+        <div className="col-5 ps-5">
+          <WorkoutRatings
+            ratings={ratings}
+            updateRatingHandler={updateRating}
+            deleteRatingHandler={deleteRating}
+          />
         </div>
       </div>
-      <h5 className="mb-4">
-        Level: <LevelBadge level={workout.level} />
-      </h5>
-      <div className="d-flex mb-4">
-        <h5 className="me-4">
-          Posted on:{" "}
-          <span className="badge bg-primary">
-            {formatDate(new Date(workout.post_date))}
-          </span>
-        </h5>
-        <h5>
-          Posted by:{" "}
-          <span className="badge bg-primary">@{workout.trainer!.username}</span>
-        </h5>
-      </div>
-      <h5>Description</h5>
-      <p className="mb-4">{workout.description}</p>
-      <h5>Exercises</h5>
-      <WorkoutStepList steps={workout.steps} />
     </>
-  );
-}
-
-function WorkoutStepList({ steps }: { steps: WorkoutStep[] }) {
-  return (
-    <Accordion>
-      {steps.map((step, idx) => (
-        <WorkoutStepItem workoutStep={step} stepIdx={idx} key={idx} />
-      ))}
-    </Accordion>
-  );
-}
-
-function WorkoutStepItem({
-  workoutStep,
-  stepIdx,
-}: {
-  workoutStep: WorkoutStep;
-  stepIdx: number;
-}) {
-  return (
-    <Accordion.Item eventKey={stepIdx.toString()}>
-      <Accordion.Header>
-        <div className="d-flex">
-          <div className="me-5">{workoutStep.exercise.name}</div>
-          <span className="badge rounded-pill text-bg-info me-2">
-            {workoutStep.sets} sets
-          </span>
-          <span className="badge rounded-pill text-bg-info me-2">
-            {workoutStep.reps} reps
-          </span>
-          <span className="badge rounded-pill text-bg-info me-2">
-            {workoutStep.rest} seconds rest
-          </span>
-        </div>
-      </Accordion.Header>
-      <Accordion.Body>
-        <p>
-          <strong>Target Muscle:</strong> {workoutStep.exercise.targetMuscle}
-        </p>
-        <p>
-          <strong>Equipment:</strong> {workoutStep.exercise.equipment}
-        </p>
-        <img src={workoutStep.exercise.gifUrl} />
-      </Accordion.Body>
-    </Accordion.Item>
   );
 }

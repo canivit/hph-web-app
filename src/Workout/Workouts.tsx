@@ -4,7 +4,6 @@ import * as client from "./client";
 import { SimpleLink } from "../SimpleLink";
 import { Link } from "react-router-dom";
 import { TrainerContent } from "../User/TrainerContent";
-import { AthleteContent } from "../User/AthleteContent";
 import { useSelector } from "react-redux";
 import { GlobalState } from "../Store/store";
 import { LevelBadge } from "./LevelBadge";
@@ -96,21 +95,6 @@ function TopBar({
             </label>
           </div>
         </TrainerContent>
-        <AthleteContent>
-          <div className="form-check me-5">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              id="showOnlyMyWorkoutsCheckboxForAthletes"
-            />
-            <label
-              className="form-check-label"
-              htmlFor="showOnlyMyWorkoutsCheckboxForAthletes"
-            >
-              Show only workouts from trainers I follow
-            </label>
-          </div>
-        </AthleteContent>
         <TrainerContent>
           <Link to="/CreateWorkout" className="btn btn-primary ms-auto">
             Create Workout

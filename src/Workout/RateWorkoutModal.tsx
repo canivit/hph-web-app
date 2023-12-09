@@ -1,38 +1,25 @@
-import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { Rating } from "./types";
 import { Rating as RatingWidget } from "react-simple-star-rating";
 
 export function RateWorkoutModal({
-  show,
+  visibility,
+  rating,
   closeHandler,
+  ratingChangedHandler,
   saveHandler,
 }: {
-  show: boolean;
+  visibility: boolean;
+  rating: Rating;
   closeHandler: () => void;
+  ratingChangedHandler: (rating: Rating) => void;
   saveHandler: (rating: Rating) => void;
 }) {
-  const [rating, setRating] = useState<Rating>({
-    _id: "",
-    value: 0,
-    comment: "",
-    date: new Date(),
-  });
-
-  function resetRating() {
-    setRating({
-      _id: "",
-      value: 0,
-      comment: "",
-      date: new Date(),
-    });
-  }
 
   return (
     <Modal
-      show={show}
+      show={visibility}
       onHide={() => {
-        resetRating();
         closeHandler();
       }}
       size="lg"
@@ -44,8 +31,9 @@ export function RateWorkoutModal({
         <div className="mb-4">
           <label className="form-label me-2">Rating:</label>
           <RatingWidget
+            initialValue={rating.value}
             onClick={(val: number) => {
-              setRating({ ...rating, value: val });
+              ratingChangedHandler({ ...rating, value: val });
             }}
           />
         </div>
@@ -59,7 +47,7 @@ export function RateWorkoutModal({
           rows={5}
           value={rating.comment}
           onChange={(e) => {
-            setRating({ ...rating, comment: e.target.value });
+            ratingChangedHandler({ ...rating, comment: e.target.value });
           }}
         />
       </Modal.Body>
@@ -67,7 +55,7 @@ export function RateWorkoutModal({
         <Button
           variant="primary"
           onClick={() => {
-            resetRating();
+            closeHandler();
             saveHandler(rating);
           }}
         >

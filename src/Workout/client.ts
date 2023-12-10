@@ -3,7 +3,7 @@ import { API_BASE } from "../environment";
 import { Exercise, Rating, Workout } from "./types";
 
 const WORKOUTS_API = `${API_BASE}/workouts`;
-const RATINGS_API = `${API_BASE}/ratings`;
+export const RATINGS_API = `${API_BASE}/ratings`;
 
 const request = axios.create({
   withCredentials: true,
@@ -48,6 +48,11 @@ export async function findRatingsByWorkoutId(
   workoutId: string
 ): Promise<Rating[]> {
   const response = await request.get(`${RATINGS_API}/workout/${workoutId}`);
+  return response.data;
+}
+
+export async function findRatingsByUserId(userId: string): Promise<Rating[]> {
+  const response = await request.get(`${RATINGS_API}/user/${userId}`);
   return response.data;
 }
 

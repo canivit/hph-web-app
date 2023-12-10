@@ -44,15 +44,19 @@ export function WorkoutRatings({
         ratingChangedHandler={setSelectedRating}
       />
       <h2 className="mb-4">Ratings</h2>
-      {ratings.map((rating) => (
-        <RatingCard
-          key={rating._id}
-          rating={rating}
-          showModal={showModal}
-          setSelectedRating={setSelectedRating}
-          deleteRatingHandler={deleteRatingHandler}
-        />
-      ))}
+      {ratings.length === 0 ? (
+        <span className="text-muted">No ratings yet</span>
+      ) : (
+        ratings.map((rating) => (
+          <RatingCard
+            key={rating._id}
+            rating={rating}
+            showModal={showModal}
+            setSelectedRating={setSelectedRating}
+            deleteRatingHandler={deleteRatingHandler}
+          />
+        ))
+      )}
     </>
   );
 }

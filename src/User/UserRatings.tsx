@@ -28,9 +28,13 @@ export function UserRatings({ user }: { user: User }) {
   return (
     <div className="mt-4">
       <h4 className="mb-4">Ratings posted by {user.firstName}</h4>
-      {ratings.map((rating) => (
-        <RatingCard key={rating._id} rating={rating} />
-      ))}
+      {ratings.length === 0 ? (
+        <span className="text-muted">
+          {user.firstName} did not post any ratings yet
+        </span>
+      ) : (
+        ratings.map((rating) => <RatingCard key={rating._id} rating={rating} />)
+      )}
     </div>
   );
 }

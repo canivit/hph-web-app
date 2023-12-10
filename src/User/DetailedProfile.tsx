@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import { UserRatings } from "./UserRatings";
+import { UserWorkouts } from "./UserWorkouts";
 
 export function DetailedProfile() {
   const [user, setUser] = useState<User | "Loading" | "NotFound">("Loading");
@@ -46,7 +47,11 @@ export function DetailedProfile() {
       </div>
       <div className="col-1"></div>
       <div className="col-5">
-        {user.role === "Athlete" ? <UserRatings user={user} /> : <></>}
+        {user.role === "Athlete" ? (
+          <UserRatings user={user} />
+        ) : (
+          <UserWorkouts user={user} />
+        )}
       </div>
     </div>
   );

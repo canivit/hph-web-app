@@ -36,6 +36,11 @@ export async function deleteWorkout(workoutId: string): Promise<void> {
   await request.delete(`${WORKOUTS_API}/${workoutId}`);
 }
 
+export async function findWorkoutsByUserId(userId: string): Promise<Workout[]> {
+  const response = await request.get(`${WORKOUTS_API}/user/${userId}`);
+  return response.data;
+}
+
 export async function createRating(rating: Rating, workoutId: string) {
   const response = await request.put(
     `${RATINGS_API}/workout/${workoutId}`,

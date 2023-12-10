@@ -10,7 +10,7 @@ import { CreateWorkout } from "./Workout/CreateWorkout";
 import { Profile } from "./User/Profile";
 import { EditProfile } from "./User/EditProfile";
 import { EditWorkout } from "./Workout/EditWorkout";
-import { Home } from "./Home";
+import { Home } from "./Home/Home";
 import { Workouts } from "./Workout/Workouts";
 import { DetailedWorkout } from "./Workout/DetailedWorkout";
 import { DetailedProfile } from "./User/DetailedProfile";

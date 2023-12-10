@@ -1,0 +1,22 @@
+.thumbnail {
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  top: 1%;
+  left: 0;
+  width: 100%;
+  color: white;
+}
+
+.description {
+  position: absolute;
+  top: 85%;
+  width: 100%;
+  color: white;
+  text-align: justify;
+  text-justify: distribute;
+  padding-right: 10%;
+  padding-left: 10%;
+}

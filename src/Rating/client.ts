@@ -36,3 +36,13 @@ export async function updateRating(rating: Rating): Promise<Rating> {
 export async function deleteRating(ratingId: string): Promise<Rating> {
   return await request.delete(`${RATINGS_API}/${ratingId}`);
 }
+
+export async function findMostRecentRatingsByUserId(
+  userId: string,
+  limit: number
+): Promise<Rating[]> {
+  const response = await request.get(
+    `${RATINGS_API}/user/${userId}/recent/${limit}`
+  );
+  return response.data;
+}

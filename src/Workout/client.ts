@@ -42,9 +42,12 @@ export async function findWorkoutsByUserId(userId: string): Promise<Workout[]> {
 }
 
 export async function findMostRecentWorkoutsByUserId(
-  userId: string
+  userId: string,
+  limit: number
 ): Promise<Workout[]> {
-  const response = await request.get(`${WORKOUTS_API}/user/${userId}/recent/5`);
+  const response = await request.get(
+    `${WORKOUTS_API}/user/${userId}/recent/${limit}`
+  );
   return response.data;
 }
 

@@ -1,5 +1,6 @@
 import background from "../assets/background.jpg";
 import "./Home.css";
+import { RecentRatingsOfUser } from "./RecentRatingsOfUser";
 import { RecentWorkoutsOfUser } from "./RecentWorkoutsOfUser";
 
 export function Home() {
@@ -21,6 +22,7 @@ export function Home() {
         </div>
       </div>
       <RecentWorkoutsOfUser />
+      <RecentRatingsOfUser />
     </div>
   );
 }

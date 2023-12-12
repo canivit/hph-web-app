@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import * as client from "../Workout/client";
 import { WorkoutCards } from "../Workout/WorkoutCards";
 
+const NUM_OF_WORKOUTS = 5;
+
 export function RecentWorkoutsOfUser() {
   const currentUser = useSelector(
     (state: GlobalState) => state.userReducer.currentUser
@@ -13,7 +15,8 @@ export function RecentWorkoutsOfUser() {
 
   const fetchWorkouts = async (trainerId: string) => {
     const foundWorkouts = await client.findMostRecentWorkoutsByUserId(
-      trainerId
+      trainerId,
+      NUM_OF_WORKOUTS
     );
     setWorkouts(foundWorkouts);
   };
@@ -24,7 +27,7 @@ export function RecentWorkoutsOfUser() {
     }
   }, []);
 
-  if (workouts === "NoRender") {
+  if (workouts === "NoRender" || workouts.length === 0) {
     return <></>;
   }
 

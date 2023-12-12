@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { Level, Workout } from "./types";
 import * as client from "./client";
-import { SimpleLink } from "../SimpleLink";
 import { Link } from "react-router-dom";
 import { TrainerContent } from "../User/TrainerContent";
 import { useSelector } from "react-redux";
 import { GlobalState } from "../Store/store";
-import { LevelBadge } from "./LevelBadge";
-import { formatDate } from "../util";
+import { WorkoutCards } from "./WorkoutCards";
 
 export function Workouts() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
@@ -26,7 +24,8 @@ export function Workouts() {
   );
 
   async function fetchWorkouts() {
-    setWorkouts(await client.findAllWorkouts());
+    const foundWorkouts = await client.findAllWorkouts();
+    setWorkouts(foundWorkouts);
   }
 
   useEffect(() => {
@@ -34,13 +33,9 @@ export function Workouts() {
   }, []);
 
   return (
-    <div style={{width: "100%"}}>
+    <div style={{ width: "100%" }}>
       <TopBar filter={filter} setFilter={setFilter} />
-      <div className="d-flex flex-row flex-wrap">
-        {workouts.filter(workoutPred).map((workout) => (
-          <WorkoutCard workout={workout} key={workout._id} />
-        ))}
-      </div>
+      <WorkoutCards workouts={workouts.filter(workoutPred)} />
     </div>
   );
 }
@@ -103,74 +98,6 @@ function TopBar({
       </div>
       <hr />
     </>
-  );
-}
-
-function WorkoutCard({ workout }: { workout: Workout }) {
-  return (
-    <div
-      className="card text-bg-light"
-      style={{
-        width: "350px",
-        marginRight: "2%",
-        marginBottom: "2%",
-      }}
-    >
-      <div className="card-body">
-        <SimpleLink to={`/Workouts/${workout._id}`}>
-          <h5 className="card-title">{workout.title}</h5>
-        </SimpleLink>
-        <p className="card-text">{workout.description}</p>
-      </div>
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item">
-          <div className="d-flex justify-content-between">
-            <div>
-              <b>Level:</b>
-            </div>
-            <div>
-              <LevelBadge level={workout.level} />
-            </div>
-          </div>
-        </li>
-        <li className="list-group-item">
-          <div className="d-flex justify-content-between">
-            <div>
-              <b>Number of Exercises:</b>
-            </div>
-            <div>
-              <span className="badge text-bg-primary">
-                {workout.steps.length}
-              </span>
-            </div>
-          </div>
-        </li>
-        <li className="list-group-item">
-          <div className="d-flex justify-content-between">
-            <div>
-              <b>Posted on:</b>
-            </div>
-            <div>
-              <span className="badge text-bg-primary">
-                {formatDate(new Date(workout.post_date))}
-              </span>
-            </div>
-          </div>
-        </li>
-        <li className="list-group-item">
-          <div className="d-flex justify-content-between">
-            <div>
-              <b>Posted by:</b>
-            </div>
-            <div>
-              <SimpleLink to={`/Profile/${workout.trainer!._id}`}>
-                @{workout.trainer!.username}
-              </SimpleLink>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
   );
 }
 

@@ -33,6 +33,7 @@ export function RecentRatingsOfUser() {
 
   return (
     <div className="mt-5 text-center">
+      <hr />
       <h3 className="mb-4">Recent ratings you posted</h3>
       <RatingCards ratings={ratings} />
     </div>

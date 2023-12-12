@@ -33,6 +33,7 @@ export function RecentWorkoutsOfUser() {
 
   return (
     <div className="mt-5 text-center">
+      <hr />
       <h3 className="mb-4">Recent workouts you posted</h3>
       <WorkoutCards workouts={workouts} />
     </div>

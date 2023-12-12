@@ -36,3 +36,11 @@ export async function findUserById(userId: string): Promise<User> {
   const response = await request.get(`${USERS_API}/${userId}`);
   return response.data;
 }
+
+export async function findMostRecentlyJoinedUsers(limit: number): Promise<{
+  trainers: User[];
+  athletes: User[];
+}> {
+  const response = await request.get(`${USERS_API}/recent/${limit}`);
+  return response.data;
+}

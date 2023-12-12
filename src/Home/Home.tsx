@@ -2,6 +2,7 @@ import background from "../assets/background.jpg";
 import "./Home.css";
 import { RecentRatingsOfUser } from "./RecentRatingsOfUser";
 import { RecentWorkoutsOfUser } from "./RecentWorkoutsOfUser";
+import { RecentlyJoinedUsers } from "./RecentlyJoinedUsers";
 
 export function Home() {
   return (
@@ -23,6 +24,7 @@ export function Home() {
       </div>
       <RecentWorkoutsOfUser />
       <RecentRatingsOfUser />
+      <RecentlyJoinedUsers />
     </div>
   );
 }

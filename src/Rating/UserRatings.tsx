@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Rating } from "../Workout/types";
-import * as client from "../Workout/client";
-import { User } from "./types";
+import { Rating } from "./types";
+import * as client from "./client";
+import { User } from "../User/types";
 import { formatDate } from "../util";
 import { Rating as RatingWidget } from "react-simple-star-rating";
 import { SimpleLink } from "../SimpleLink";

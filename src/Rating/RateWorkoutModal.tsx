@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
-import { Rating } from "./types";
 import { Rating as RatingWidget } from "react-simple-star-rating";
+import { Rating } from "./types";
 
 export function RateWorkoutModal({
   visibility,

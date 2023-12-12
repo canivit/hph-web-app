@@ -9,12 +9,13 @@ import { Link } from "react-router-dom";
 import { SpecificUserContent } from "../User/SpecificUserContent";
 import { formatDate } from "../util";
 import { LevelBadge } from "./LevelBadge";
-import { Rating, Workout, WorkoutStep } from "./types";
-import { RateWorkoutModal } from "./RateWorkoutModal";
+import { Workout, WorkoutStep } from "./types";
+import { RateWorkoutModal } from "../Rating/RateWorkoutModal";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { GlobalState } from "../Store/store";
 import { SimpleLink } from "../SimpleLink";
+import { Rating } from "../Rating/types";
 
 export function WorkoutDetails({
   workout,

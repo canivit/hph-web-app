@@ -7,7 +7,7 @@ import { SpecificUserContent } from "./SpecificUserContent";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
-import { UserRatings } from "./UserRatings";
+import { UserRatings } from "../Rating/UserRatings";
 import { UserWorkouts } from "./UserWorkouts";
 
 export function DetailedProfile() {

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Rating, Workout } from "./types";
+import { Workout } from "./types";
 import { useNavigate, useParams } from "react-router";
-import * as client from "./client";
+import * as ratingsClient from "../Rating/client";
+import * as workoutsClient from "./client";
 import { WorkoutDetails } from "./WorkoutsDetails";
 import { updateGifUrlsOfWorkout } from "./util";
-import { WorkoutRatings } from "./WorkoutRatings";
+import { WorkoutRatings } from "../Rating/WorkoutRatings";
+import { Rating } from "../Rating/types";
 
 export function DetailedWorkout() {
   const [workout, setWorkout] = useState<Workout | "Loading" | "NotFound">(
@@ -17,7 +19,7 @@ export function DetailedWorkout() {
 
   async function fetchWorkout() {
     try {
-      let workout = await client.findWorkoutById(workoutId);
+      let workout = await workoutsClient.findWorkoutById(workoutId);
       workout = await updateGifUrlsOfWorkout(workout);
       setWorkout(workout);
     } catch {
@@ -26,29 +28,29 @@ export function DetailedWorkout() {
   }
 
   async function fetchRatings() {
-    const ratings = await client.findRatingsByWorkoutId(workoutId);
+    const ratings = await ratingsClient.findRatingsByWorkoutId(workoutId);
     setRatings(ratings);
   }
 
   async function deleteWorkout() {
-    await client.deleteWorkout(workoutId);
+    await workoutsClient.deleteWorkout(workoutId);
     navigate("/Workouts");
   }
 
   async function createRating(rating: Rating) {
-    const createdRating = await client.createRating(rating, workoutId);
+    const createdRating = await ratingsClient.createRating(rating, workoutId);
     setRatings([...ratings, createdRating]);
   }
 
   async function updateRating(rating: Rating) {
-    const updatedRating = await client.updateRating(rating);
+    const updatedRating = await ratingsClient.updateRating(rating);
     setRatings(
       ratings.map((r) => (r._id === updatedRating._id ? updatedRating : r))
     );
   }
 
   async function deleteRating(ratingId: string) {
-    await client.deleteRating(ratingId);
+    await ratingsClient.deleteRating(ratingId);
     setRatings(ratings.filter((r) => r._id !== ratingId));
   }
 

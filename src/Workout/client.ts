@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_BASE } from "../environment";
-import { Exercise, Rating, Workout } from "./types";
+import { Exercise, Workout } from "./types";
 
 const WORKOUTS_API = `${API_BASE}/workouts`;
 export const RATINGS_API = `${API_BASE}/ratings`;
@@ -46,35 +46,6 @@ export async function findMostRecentWorkoutsByUserId(
 ): Promise<Workout[]> {
   const response = await request.get(`${WORKOUTS_API}/user/${userId}/recent/5`);
   return response.data;
-}
-
-export async function createRating(rating: Rating, workoutId: string) {
-  const response = await request.put(
-    `${RATINGS_API}/workout/${workoutId}`,
-    rating
-  );
-  return response.data;
-}
-
-export async function findRatingsByWorkoutId(
-  workoutId: string
-): Promise<Rating[]> {
-  const response = await request.get(`${RATINGS_API}/workout/${workoutId}`);
-  return response.data;
-}
-
-export async function findRatingsByUserId(userId: string): Promise<Rating[]> {
-  const response = await request.get(`${RATINGS_API}/user/${userId}`);
-  return response.data;
-}
-
-export async function updateRating(rating: Rating): Promise<Rating> {
-  const response = await request.post(`${RATINGS_API}/${rating._id}`, rating);
-  return response.data;
-}
-
-export async function deleteRating(ratingId: string): Promise<Rating> {
-  return await request.delete(`${RATINGS_API}/${ratingId}`);
 }
 
 const exerciseRequest = axios.create({

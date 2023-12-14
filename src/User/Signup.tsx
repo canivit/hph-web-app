@@ -77,7 +77,6 @@ export function Signup() {
               ...user,
               username: e.target.value,
             });
-            setError("");
           }}
         />
       </div>
@@ -96,7 +95,6 @@ export function Signup() {
               ...user,
               password: e.target.value,
             });
-            setError("");
           }}
         />
       </div>
@@ -115,7 +113,6 @@ export function Signup() {
               ...user,
               firstName: e.target.value,
             });
-            setError("");
           }}
         />
       </div>
@@ -134,7 +131,6 @@ export function Signup() {
               ...user,
               lastName: e.target.value,
             });
-            setError("");
           }}
         />
       </div>
@@ -153,7 +149,6 @@ export function Signup() {
               ...user,
               dob: e.target.value,
             });
-            setError("");
           }}
         />
       </div>
@@ -171,7 +166,6 @@ export function Signup() {
                 ...user,
                 role: e.target.value,
               });
-              setError("");
             }
           }}
         >

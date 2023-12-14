@@ -17,6 +17,21 @@ export function WorkoutEditor({
   title: string;
 }) {
   const [currentWorkout, setCurrentWorkout] = useState(workout);
+  const [error, setError] = useState<FormError>("");
+
+  function saveWorkout() {
+    if (currentWorkout.title === "") {
+      setError("Title is required");
+      return;
+    }
+
+    if (currentWorkout.description === "") {
+      setError("Description is required");
+      return;
+    }
+
+    onSaveHandler(currentWorkout);
+  }
 
   function onAddExercise(exercise: Exercise) {
     setCurrentWorkout({
@@ -77,7 +92,7 @@ export function WorkoutEditor({
           />
           <button
             className="btn btn-primary mt-3 me-2"
-            onClick={() => onSaveHandler(currentWorkout)}
+            onClick={() => saveWorkout()}
           >
             Save Workout
           </button>
@@ -87,6 +102,12 @@ export function WorkoutEditor({
           >
             Cancel
           </button>
+
+          {error !== "" && (
+            <div className="alert alert-danger mt-3" role="alert">
+              {error}
+            </div>
+          )}
         </div>
         <div className="col-5">
           <SearchExercise addExerciseHandler={onAddExercise} />
@@ -292,3 +313,5 @@ function WorkoutStepItem({
     </Accordion.Item>
   );
 }
+
+type FormError = "Title is required" | "Description is required" | "";

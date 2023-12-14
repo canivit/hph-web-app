@@ -1,6 +1,7 @@
 import { Modal, Button } from "react-bootstrap";
 import { Rating as RatingWidget } from "react-simple-star-rating";
 import { Rating } from "./types";
+import { useState } from "react";
 
 export function RateWorkoutModal({
   visibility,
@@ -15,15 +16,25 @@ export function RateWorkoutModal({
   ratingChangedHandler: (rating: Rating) => void;
   saveHandler: (rating: Rating) => void;
 }) {
+  const [error, setError] = useState<FormError>("");
+
+  function save() {
+    if (rating.comment === "") {
+      setError("Comments are required");
+      return;
+    }
+
+    saveHandler(rating);
+    closeHandler();
+  }
+
+  function close() {
+    setError("");
+    closeHandler();
+  }
 
   return (
-    <Modal
-      show={visibility}
-      onHide={() => {
-        closeHandler();
-      }}
-      size="lg"
-    >
+    <Modal show={visibility} onHide={() => close()} size="lg">
       <Modal.Header closeButton>
         <Modal.Title>Rate Workout</Modal.Title>
       </Modal.Header>
@@ -50,18 +61,19 @@ export function RateWorkoutModal({
             ratingChangedHandler({ ...rating, comment: e.target.value });
           }}
         />
+        {error !== "" && (
+          <div className="alert alert-danger mt-3 mb-0" role="alert">
+            {error}
+          </div>
+        )}
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="primary"
-          onClick={() => {
-            closeHandler();
-            saveHandler(rating);
-          }}
-        >
+        <Button variant="primary" onClick={() => save()}>
           Save Rating
         </Button>
       </Modal.Footer>
     </Modal>
   );
 }
+
+type FormError = "Comments are required" | "";

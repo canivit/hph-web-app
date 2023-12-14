@@ -20,6 +20,31 @@ export function Signup() {
   const dispatch = useDispatch();
 
   async function signup() {
+    if (user.username === "") {
+      setError("Username is required");
+      return;
+    }
+
+    if (user.password === "") {
+      setError("Password is required");
+      return;
+    }
+
+    if (user.firstName === "") {
+      setError("First name is required");
+      return;
+    }
+
+    if (user.lastName === "") {
+      setError("Last name is required");
+      return;
+    }
+
+    if (user.dob === "") {
+      setError("Date of birth is required");
+      return;
+    }
+
     try {
       const currentUser = await client.signup(user);
       dispatch(setGlobalUser(currentUser));
@@ -29,8 +54,9 @@ export function Signup() {
       console.log(e);
       if (e instanceof AxiosError) {
         setError(e.response?.data ?? "Unknown error occurred");
+      } else {
+        setError("Unknown error occurred");
       }
-      setError("Unknown error occurred");
     }
   }
 
@@ -51,6 +77,7 @@ export function Signup() {
               ...user,
               username: e.target.value,
             });
+            setError("");
           }}
         />
       </div>
@@ -69,6 +96,7 @@ export function Signup() {
               ...user,
               password: e.target.value,
             });
+            setError("");
           }}
         />
       </div>
@@ -87,6 +115,7 @@ export function Signup() {
               ...user,
               firstName: e.target.value,
             });
+            setError("");
           }}
         />
       </div>
@@ -105,6 +134,7 @@ export function Signup() {
               ...user,
               lastName: e.target.value,
             });
+            setError("");
           }}
         />
       </div>
@@ -123,6 +153,7 @@ export function Signup() {
               ...user,
               dob: e.target.value,
             });
+            setError("");
           }}
         />
       </div>
@@ -140,6 +171,7 @@ export function Signup() {
                 ...user,
                 role: e.target.value,
               });
+              setError("");
             }
           }}
         >
